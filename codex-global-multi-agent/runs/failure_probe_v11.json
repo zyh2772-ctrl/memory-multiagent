@@ -1,0 +1,74 @@
+{
+  "role": "Retriever",
+  "memory_access_mode": "main_agent_packaged_context_only",
+  "context_snapshot_id": "snapshot-v11-validation",
+  "run_revision": 11,
+  "context_blocks": [
+    "Workspace Facts",
+    "Retrieved Facts"
+  ],
+  "context_token_estimate": 90,
+  "goal": "验证失败场景下的 fallback 路由是否可执行。",
+  "scope": "模拟一个本地证据缺失的检索路径。",
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "summary": "缺少目标证据时，本角色没有自行扩展记忆范围，而是要求主代理切换工具或路径。",
+  "evidence": [
+    {
+      "id": "failure-e1",
+      "type": "command",
+      "value": "Missing local artifact prevents direct retrieval in the current path.",
+      "ref": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/failure_probe_v11.json",
+      "source": "Retriever",
+      "timestamp": "2026-04-05"
+    }
+  ],
+  "state_delta": {
+    "facts": [
+      {
+        "key": "missing_artifact_detected",
+        "value": "true",
+        "scope": "task",
+        "source": "tool_output",
+        "evidence_ids": [
+          "failure-e1"
+        ]
+      }
+    ],
+    "preferences": [],
+    "decisions": [
+      {
+        "topic": "failed_retrieval_path",
+        "decision": "Do not retry the same missing-artifact retrieval path without changing the source.",
+        "rationale": "Repeated attempts on the same missing local artifact would be wasted work.",
+        "scope": "task",
+        "proposal_type": "append",
+        "source": "tool_output",
+        "evidence_ids": [
+          "failure-e1"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "Retrying the same missing-artifact path would create a failure loop.",
+        "impact": "medium",
+        "likelihood": "high",
+        "scope": "task",
+        "source": "tool_output",
+        "evidence_ids": [
+          "failure-e1"
+        ]
+      }
+    ]
+  },
+  "risks": [
+    "This path is intentionally incomplete and should not be retried without a route change."
+  ],
+  "fallback_suggestion": "switch_tool",
+  "next_steps": [
+    "Ask the main agent to choose a different evidence source instead of retrying the same path."
+  ],
+  "confidence": 0.61
+}

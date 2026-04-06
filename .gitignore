@@ -1,0 +1,14 @@
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Local OpenMemory data and env
+codex-global-memory/openmemory/.env
+codex-global-memory/openmemory/openmemory.db
+codex-global-memory/openmemory/data/
+

@@ -1,0 +1,17 @@
+{
+  "task_id": "step3-research-pipeline",
+  "goal": "验证 Codex 第3步多代理协议是否已经具备可执行基础",
+  "scope": "仅使用本地文档与当前工作区资产，不访问外网",
+  "artifacts": [
+    "/Users/zyh/Desktop/ceshi123/ollamashiyong/Codex全局增强方案-候选清单.md",
+    "/Users/zyh/Desktop/ceshi123/ollamashiyong/prompts.chat-main/src/content/book/05-structured-output.mdx",
+    "/Users/zyh/Desktop/ceshi123/ollamashiyong/prompts.chat-main/src/content/book/11-prompt-chaining.mdx",
+    "/Users/zyh/Desktop/ceshi123/ollamashiyong/prompts.chat-main/src/content/book/14-context-engineering.mdx"
+  ],
+  "expected_checks": [
+    "至少一条 Research Pipeline 跑通",
+    "子代理返回完整结构化 JSON",
+    "主代理能正确合并 state_delta",
+    "失败子代理能返回 fallback_suggestion"
+  ]
+}

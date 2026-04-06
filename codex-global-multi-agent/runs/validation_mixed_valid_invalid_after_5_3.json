@@ -1,0 +1,295 @@
+{
+  "ok": false,
+  "files_checked": 2,
+  "valid_files": 1,
+  "validation_errors": [
+    "invalid_fact_update_without_evidence.json: state_delta.facts.evidence_ids are required for update/invalidate"
+  ],
+  "file_reports": [
+    {
+      "file": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json",
+      "schema_kind": "proposal",
+      "valid": true,
+      "role": "Planner",
+      "fallback_suggestion": null,
+      "confidence": 0.82,
+      "errors": []
+    },
+    {
+      "file": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/invalid_fact_update_without_evidence.json",
+      "schema_kind": "proposal",
+      "valid": false,
+      "role": "Verifier",
+      "fallback_suggestion": "escalate_to_main_agent",
+      "confidence": 0.41,
+      "errors": [
+        "invalid_fact_update_without_evidence.json: state_delta.facts.evidence_ids are required for update/invalidate"
+      ]
+    }
+  ],
+  "recall_package_reports": [],
+  "role_context_report": {
+    "ok": true,
+    "per_file": [
+      {
+        "file": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json",
+        "role": "Planner",
+        "context_blocks": [
+          "Relevant Preferences",
+          "Workspace Facts",
+          "Prior Decisions",
+          "Task Continuation State",
+          "Known Risks"
+        ],
+        "allowed_blocks": [
+          "Known Risks",
+          "Prior Decisions",
+          "Relevant Preferences",
+          "Task Continuation State",
+          "Workspace Facts"
+        ],
+        "memory_access_mode": "main_agent_packaged_context_only",
+        "ok": true
+      }
+    ]
+  },
+  "snapshot_consistency_report": {
+    "ok": true,
+    "role_payloads": 1,
+    "snapshot_group_count": 1,
+    "per_file": [
+      {
+        "file": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json",
+        "role": "Planner",
+        "context_snapshot_id": "snapshot-v11-validation",
+        "run_revision": 11,
+        "ok": true
+      }
+    ],
+    "violations": []
+  },
+  "budget_report": {
+    "ok": true,
+    "total_context_tokens": 250.0,
+    "max_stage_context_tokens": 1200.0,
+    "max_long_term_tokens": 1200.0,
+    "violations": [],
+    "per_file": [
+      {
+        "file": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json",
+        "role": "Planner",
+        "context_token_estimate": 250.0
+      }
+    ]
+  },
+  "merged_state": {
+    "facts": [
+      {
+        "key": "validation_stage",
+        "value": "research_pipeline_validation",
+        "scope": "task",
+        "source": "observed_fact",
+        "evidence_ids": [
+          "planner-e1"
+        ],
+        "kind": "facts",
+        "source_file": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json",
+        "identity": "facts:task:validation_stage",
+        "value_signature": "{\"key\": \"validation_stage\", \"proposal_type\": null, \"value\": \"research_pipeline_validation\"}"
+      }
+    ],
+    "preferences": [
+      {
+        "key": "memory_entry_mode",
+        "value": "main_agent_packaged_context_only",
+        "scope": "workspace",
+        "source": "approved_decision",
+        "evidence_ids": [
+          "planner-e2"
+        ],
+        "kind": "preferences",
+        "source_file": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json",
+        "identity": "preferences:workspace:memory_entry_mode",
+        "value_signature": "{\"key\": \"memory_entry_mode\", \"proposal_type\": null, \"value\": \"main_agent_packaged_context_only\"}"
+      }
+    ],
+    "decisions": [
+      {
+        "topic": "orchestrator_entrypoint",
+        "decision": "Use before_subagent_spawn as the only long-term memory entrypoint for subagent launches.",
+        "rationale": "Centralized recall preserves budget and prevents subagents from bypassing memory governance.",
+        "scope": "workspace",
+        "proposal_type": "append",
+        "source": "approved_decision",
+        "evidence_ids": [
+          "planner-e1",
+          "planner-e2"
+        ],
+        "kind": "decisions",
+        "source_file": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json",
+        "identity": "decisions:workspace:orchestrator_entrypoint",
+        "value_signature": "{\"decision\": \"Use before_subagent_spawn as the only long-term memory entrypoint for subagent launches.\", \"proposal_type\": \"append\", \"topic\": \"orchestrator_entrypoint\"}"
+      }
+    ],
+    "risks": [
+      {
+        "risk": "If a subagent bypasses packaged context, role-specific budgeting and pollution control both fail.",
+        "impact": "high",
+        "likelihood": "medium",
+        "scope": "workspace",
+        "source": "approved_decision",
+        "evidence_ids": [
+          "planner-e2"
+        ],
+        "kind": "risks",
+        "source_file": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json",
+        "identity": "risks:workspace:If a subagent bypasses packaged context, role-specific budgeting and pollution control both fail.",
+        "value_signature": "{\"impact\": \"high\", \"likelihood\": \"medium\", \"risk\": \"If a subagent bypasses packaged context, role-specific budgeting and pollution control both fail.\"}"
+      }
+    ]
+  },
+  "approval_report": {
+    "approved": [
+      {
+        "identity": "facts:task:validation_stage",
+        "kind": "facts",
+        "scope": "task",
+        "source": "observed_fact",
+        "proposal_type": null,
+        "source_files": [
+          "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json"
+        ],
+        "evidence_ids": [
+          "planner-e1"
+        ],
+        "reason": "meets_scope_and_evidence_requirements"
+      },
+      {
+        "identity": "preferences:workspace:memory_entry_mode",
+        "kind": "preferences",
+        "scope": "workspace",
+        "source": "approved_decision",
+        "proposal_type": null,
+        "source_files": [
+          "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json"
+        ],
+        "evidence_ids": [
+          "planner-e2"
+        ],
+        "reason": "meets_scope_and_evidence_requirements"
+      },
+      {
+        "identity": "decisions:workspace:orchestrator_entrypoint",
+        "kind": "decisions",
+        "scope": "workspace",
+        "source": "approved_decision",
+        "proposal_type": "append",
+        "source_files": [
+          "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json"
+        ],
+        "evidence_ids": [
+          "planner-e1",
+          "planner-e2"
+        ],
+        "reason": "meets_scope_and_evidence_requirements"
+      },
+      {
+        "identity": "risks:workspace:If a subagent bypasses packaged context, role-specific budgeting and pollution control both fail.",
+        "kind": "risks",
+        "scope": "workspace",
+        "source": "approved_decision",
+        "proposal_type": null,
+        "source_files": [
+          "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json"
+        ],
+        "evidence_ids": [
+          "planner-e2"
+        ],
+        "reason": "meets_scope_and_evidence_requirements"
+      }
+    ],
+    "deferred": [],
+    "rejected": [],
+    "audit_records": [
+      {
+        "identity": "facts:task:validation_stage",
+        "kind": "facts",
+        "scope": "task",
+        "source": "observed_fact",
+        "proposal_type": null,
+        "source_files": [
+          "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json"
+        ],
+        "evidence_ids": [
+          "planner-e1"
+        ],
+        "reason": "meets_scope_and_evidence_requirements",
+        "approved_by": "main_agent",
+        "status": "approved"
+      },
+      {
+        "identity": "preferences:workspace:memory_entry_mode",
+        "kind": "preferences",
+        "scope": "workspace",
+        "source": "approved_decision",
+        "proposal_type": null,
+        "source_files": [
+          "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json"
+        ],
+        "evidence_ids": [
+          "planner-e2"
+        ],
+        "reason": "meets_scope_and_evidence_requirements",
+        "approved_by": "main_agent",
+        "status": "approved"
+      },
+      {
+        "identity": "decisions:workspace:orchestrator_entrypoint",
+        "kind": "decisions",
+        "scope": "workspace",
+        "source": "approved_decision",
+        "proposal_type": "append",
+        "source_files": [
+          "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json"
+        ],
+        "evidence_ids": [
+          "planner-e1",
+          "planner-e2"
+        ],
+        "reason": "meets_scope_and_evidence_requirements",
+        "approved_by": "main_agent",
+        "status": "approved"
+      },
+      {
+        "identity": "risks:workspace:If a subagent bypasses packaged context, role-specific budgeting and pollution control both fail.",
+        "kind": "risks",
+        "scope": "workspace",
+        "source": "approved_decision",
+        "proposal_type": null,
+        "source_files": [
+          "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/planner_v11.json"
+        ],
+        "evidence_ids": [
+          "planner-e2"
+        ],
+        "reason": "meets_scope_and_evidence_requirements",
+        "approved_by": "main_agent",
+        "status": "approved"
+      }
+    ],
+    "ok": true
+  },
+  "fallback_report": {
+    "ok": true,
+    "routes": []
+  },
+  "contract_assertions": {
+    "unique_memory_entry_ok": true,
+    "role_distribution_ok": true,
+    "snapshot_consistency_ok": true,
+    "structured_proposals_ok": true,
+    "approval_writeback_ready": true,
+    "budget_fuse_ok": true,
+    "fallback_routing_ok": true
+  }
+}

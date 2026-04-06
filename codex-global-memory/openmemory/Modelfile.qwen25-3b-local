@@ -1,0 +1,3 @@
+FROM /Users/zyh/.lmstudio/models/mradermacher/Qwen2.5-3B-Instruct-abliterated-GGUF/Qwen2.5-3B-Instruct-Abliterated.Q4_K_M.gguf
+
+PARAMETER num_ctx 4096

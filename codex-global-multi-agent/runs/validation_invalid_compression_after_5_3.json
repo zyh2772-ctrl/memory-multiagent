@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "files_checked": 2,
+  "valid_files": 0,
+  "validation_errors": [
+    "invalid_compression_scope_mismatch.json: compression proposal facts scope must match compression_manifest.target_scope",
+    "invalid_compression_decisions_present.json: compression proposals must not write state_delta.decisions"
+  ],
+  "file_reports": [
+    {
+      "file": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/invalid_compression_scope_mismatch.json",
+      "schema_kind": "compression_proposal",
+      "valid": false,
+      "role": "Synthesizer",
+      "fallback_suggestion": "retry_same_tool",
+      "confidence": 0.66,
+      "errors": [
+        "invalid_compression_scope_mismatch.json: compression proposal facts scope must match compression_manifest.target_scope"
+      ]
+    },
+    {
+      "file": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/invalid_compression_decisions_present.json",
+      "schema_kind": "compression_proposal",
+      "valid": false,
+      "role": "Synthesizer",
+      "fallback_suggestion": "switch_tool",
+      "confidence": 0.63,
+      "errors": [
+        "invalid_compression_decisions_present.json: compression proposals must not write state_delta.decisions"
+      ]
+    }
+  ],
+  "recall_package_reports": [],
+  "role_context_report": {
+    "ok": true,
+    "per_file": []
+  },
+  "snapshot_consistency_report": {
+    "ok": true,
+    "role_payloads": 0,
+    "snapshot_group_count": 0,
+    "per_file": [],
+    "violations": []
+  },
+  "budget_report": {
+    "ok": true,
+    "total_context_tokens": 0.0,
+    "max_stage_context_tokens": 1200.0,
+    "max_long_term_tokens": 1200.0,
+    "violations": [],
+    "per_file": []
+  },
+  "merged_state": {
+    "facts": [],
+    "preferences": [],
+    "decisions": [],
+    "risks": []
+  },
+  "approval_report": {
+    "approved": [],
+    "deferred": [],
+    "rejected": [],
+    "audit_records": [],
+    "ok": true
+  },
+  "fallback_report": {
+    "ok": true,
+    "routes": []
+  },
+  "contract_assertions": {
+    "unique_memory_entry_ok": true,
+    "role_distribution_ok": true,
+    "snapshot_consistency_ok": true,
+    "structured_proposals_ok": false,
+    "approval_writeback_ready": false,
+    "budget_fuse_ok": true,
+    "fallback_routing_ok": true
+  }
+}

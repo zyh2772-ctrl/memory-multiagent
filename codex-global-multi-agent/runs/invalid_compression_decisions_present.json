@@ -1,0 +1,78 @@
+{
+  "role": "Synthesizer",
+  "memory_access_mode": "main_agent_packaged_context_only",
+  "context_snapshot_id": "snapshot-test-5-3",
+  "run_revision": 72,
+  "context_blocks": [
+    "Workspace Facts",
+    "Prior Decisions",
+    "Known Risks"
+  ],
+  "context_token_estimate": 240,
+  "goal": "验证 compression proposal 不允许直接写 state_delta.decisions。",
+  "scope": "仅验证压缩提案 schema。",
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "summary": "该样本故意把压缩结果写进 state_delta.decisions，应该被 schema 拦截。",
+  "evidence": [
+    {
+      "id": "compression-decisions-present-e1",
+      "type": "file",
+      "value": "Compression proposal decisions-present fixture.",
+      "source": "Synthesizer",
+      "timestamp": "2026-04-06"
+    }
+  ],
+  "state_delta": {
+    "facts": [
+      {
+        "key": "compacted_workspace_fact",
+        "value": "[Derived] Workspace governance remains centralized under main agent approval.",
+        "scope": "workspace",
+        "source": "approved_decision",
+        "evidence_ids": [
+          "compression-decisions-present-e1"
+        ]
+      }
+    ],
+    "preferences": [],
+    "decisions": [
+      {
+        "topic": "compacted_decision_topic",
+        "decision": "Compression should not emit decisions directly.",
+        "rationale": "This fixture intentionally violates the compression proposal boundary.",
+        "scope": "workspace",
+        "proposal_type": "append",
+        "source": "approved_decision",
+        "evidence_ids": [
+          "compression-decisions-present-e1"
+        ]
+      }
+    ],
+    "risks": []
+  },
+  "risks": [],
+  "fallback_suggestion": "switch_tool",
+  "next_steps": [
+    "Move derived output into facts and let approval decide later transformations."
+  ],
+  "confidence": 0.63,
+  "schema_version": "compression_proposal_v1",
+  "proposal_kind": "compression_proposal",
+  "compression_manifest": {
+    "target_workspace_id": "ollamashiyong",
+    "target_scope": "workspace",
+    "rollback_basis": "before_compaction",
+    "source_evidence_hash": "decisions-present-hash",
+    "source_memory_ids": [
+      "mem-3"
+    ],
+    "source_identities": [
+      "facts:workspace:workspace_protocol"
+    ],
+    "raw_audit_trail_hashes": [
+      "audit-3"
+    ]
+  }
+}

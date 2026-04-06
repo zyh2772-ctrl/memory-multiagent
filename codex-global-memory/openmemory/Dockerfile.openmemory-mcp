@@ -1,0 +1,3 @@
+FROM mem0/openmemory-mcp:latest
+
+RUN pip install --no-cache-dir qdrant-client==1.17.1

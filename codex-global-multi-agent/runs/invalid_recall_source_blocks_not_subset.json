@@ -1,0 +1,34 @@
+{
+  "schema_version": "recall_package_v1",
+  "workspace_id": "ollamashiyong",
+  "context_snapshot_id": "snapshot-test-5-3",
+  "run_revision": 72,
+  "role": "Planner",
+  "trigger": "before_subagent_spawn",
+  "query": "test recall subset enforcement",
+  "context_text": "Planner only received Workspace Facts, but source list wrongly includes Prior Decisions.",
+  "context_blocks": {
+    "Workspace Facts": [
+      {
+        "key": "workspace_protocol",
+        "value": "main_agent_packaged_context_only",
+        "scope": "workspace",
+        "confidence_score": 0.95,
+        "source_memory_ids": [
+          "mem-workspace-1"
+        ]
+      }
+    ]
+  },
+  "source_context_blocks": [
+    "Workspace Facts",
+    "Prior Decisions"
+  ],
+  "stale_or_superseded": [],
+  "context_token_estimate": 32,
+  "budget_profile": {
+    "role_multiplier": 1.0,
+    "model_multiplier": 1.0,
+    "max_tokens": 1200
+  }
+}

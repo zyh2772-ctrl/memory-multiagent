@@ -1,0 +1,368 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.codex/subagent-contract.schema.json",
+  "title": "Codex Subagent Contract v1.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "goal",
+    "scope",
+    "allowed_tools",
+    "summary",
+    "evidence",
+    "state_delta",
+    "risks",
+    "fallback_suggestion",
+    "next_steps",
+    "confidence"
+  ],
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "Planner",
+        "Retriever",
+        "Verifier",
+        "Synthesizer",
+        "Architect",
+        "Implementer",
+        "Reviewer",
+        "Tester",
+        "Browser Operator",
+        "Extractor",
+        "Validator",
+        "Recorder"
+      ]
+    },
+    "memory_access_mode": {
+      "type": "string",
+      "enum": [
+        "main_agent_packaged_context_only"
+      ]
+    },
+    "context_blocks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Relevant Preferences",
+          "Workspace Facts",
+          "Prior Decisions",
+          "Task Continuation State",
+          "Known Risks",
+          "Retrieved Facts"
+        ]
+      }
+    },
+    "context_token_estimate": {
+      "type": "number",
+      "minimum": 0
+    },
+    "goal": {
+      "type": ["string", "null"]
+    },
+    "scope": {
+      "type": ["string", "null"]
+    },
+    "allowed_tools": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": ["string", "null"]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceItem"
+      }
+    },
+    "state_delta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "facts",
+        "preferences",
+        "decisions",
+        "risks"
+      ],
+      "properties": {
+        "facts": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/factItem"
+              }
+            ]
+          }
+        },
+        "preferences": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/preferenceItem"
+              }
+            ]
+          }
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/decisionItem"
+              }
+            ]
+          }
+        },
+        "risks": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/riskItem"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fallback_suggestion": {
+      "type": ["string", "null"],
+      "enum": [
+        "retry_same_tool",
+        "switch_tool",
+        "reduce_scope",
+        "request_human_input",
+        "escalate_to_main_agent",
+        null
+      ]
+    },
+    "next_steps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    }
+  },
+  "$defs": {
+    "scope": {
+      "type": "string",
+      "enum": [
+        "task",
+        "workspace",
+        "user_global"
+      ]
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "observed_fact",
+        "tool_output",
+        "user_claim",
+        "approved_decision",
+        "model_inference"
+      ]
+    },
+    "evidenceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidenceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "value"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "file",
+            "web",
+            "command",
+            "memory",
+            "inference"
+          ]
+        },
+        "value": {
+          "type": "string"
+        },
+        "ref": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string"
+        }
+      }
+    },
+    "factItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "value",
+        "scope",
+        "source"
+      ],
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidenceIds"
+        }
+      }
+    },
+    "preferenceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "value",
+        "scope",
+        "source"
+      ],
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidenceIds"
+        }
+      }
+    },
+    "decisionItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "topic",
+        "decision",
+        "scope",
+        "proposal_type",
+        "source"
+      ],
+      "properties": {
+        "topic": {
+          "type": "string"
+        },
+        "decision": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "proposal_type": {
+          "type": "string",
+          "enum": [
+            "append",
+            "update",
+            "invalidate"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidenceIds"
+        }
+      }
+    },
+    "riskItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "risk",
+        "scope",
+        "source"
+      ],
+      "properties": {
+        "risk": {
+          "type": "string"
+        },
+        "impact": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "likelihood": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidenceIds"
+        }
+      }
+    }
+  }
+}

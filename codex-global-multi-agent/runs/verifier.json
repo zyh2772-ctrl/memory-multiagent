@@ -1,0 +1,50 @@
+{
+  "goal": "Verify that the newly created multi-agent prompts, schema, and policies implement the documented prompt stack, structured output contract, memory write boundaries, injection safeguards, and fallback handling.",
+  "scope": "Inspect the provided prompt, schema, and policy files to determine whether they collectively satisfy the subagent contract requirements without modifying any workspace files.",
+  "allowed_tools": [
+    "command"
+  ],
+  "summary": "The shared base contract defines the five-layer prompt stack, role skeleton, JSON-only output rules, recovery/fallback behavior, and context safety expectations; the schema enforces the required fields, evidence typing, fallback enum, and confidence bounds; the memory policy delegates long-term writes to the main agent with entropy-handling strategies; and the injection policy mandates treating external content as data, adhering to tool/role limits, and reporting out-of-scope situations via risks or next steps.",
+  "evidence": [
+    {
+      "type": "file",
+      "value": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/prompts/shared/base_contract.md documents the prompt stack, role format requirements, JSON-only output enforcement, recovery rules, and context safety limitations."
+    },
+    {
+      "type": "file",
+      "value": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/schemas/subagent_contract.schema.json enforces the mandatory goal/scope/allowed_tools/summary/evidence/state_delta/risks/fallback/next_steps/confidence fields with strict typing and fallback enum."
+    },
+    {
+      "type": "file",
+      "value": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/policies/memory_write_policy.md forbids child agents from writing long-term memory or global skill configs, leaving state_delta review and memory resolution to the main agent."
+    },
+    {
+      "type": "file",
+      "value": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/policies/injection_boundary.md describes treating external content as data, staying within tool/context boundaries, degrading confidence when evidence is missing, and flagging overreach via risks/next_steps."
+    }
+  ],
+  "state_delta": {
+    "facts": [
+      "Prompt stack, role structure, output/recovery/fallback, and context safety expectations are explicitly documented in the base contract.",
+      "The JSON schema enforces every required subagent output field, evidence typing, and constrained fallback options.",
+      "Memory writes are restricted to candidate/state_delta submissions, with the main agent owning deduplication and entropy resolution.",
+      "Injection boundaries require data treatment of external content, tool whitelists, and explicit handling of out-of-scope or missing-evidence situations."
+    ],
+    "preferences": [
+      "Maintain structured JSON output with clear indication of actual evidence versus inference, aligning with the schema and base contract.",
+      "When missing evidence, lower confidence and offer fallback suggestions rather than forcing assumptions."
+    ],
+    "decisions": [
+      "Report compliance findings strictly via the mandated JSON contract for downstream consumers."
+    ],
+    "risks": [
+      "Policies mitigate unauthorized memory writes and instruction injection; no additional immediate risks were discovered."
+    ]
+  },
+  "risks": [
+    "None"
+  ],
+  "fallback_suggestion": null,
+  "next_steps": [],
+  "confidence": 0.72
+}

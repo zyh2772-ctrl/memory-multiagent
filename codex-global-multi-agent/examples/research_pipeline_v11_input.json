@@ -1,0 +1,46 @@
+{
+  "task_id": "step3-research-pipeline-v11",
+  "workspace_id": "ollamashiyong",
+  "entrypoint": "before_subagent_spawn",
+  "stage": "research_pipeline_validation",
+  "goal": "验证 Codex v1.1 多代理协议能否跑通唯一入口、角色分发、结构化提案、审批写回与预算熔断",
+  "scope": "仅使用本地协议文件与当前工作区样例结果，不访问外网",
+  "budget": {
+    "max_stage_context_tokens": 1200,
+    "max_long_term_context_tokens": 1200
+  },
+  "role_context_plan": {
+    "Planner": [
+      "Relevant Preferences",
+      "Workspace Facts",
+      "Prior Decisions",
+      "Task Continuation State",
+      "Known Risks"
+    ],
+    "Retriever": [
+      "Workspace Facts",
+      "Retrieved Facts"
+    ],
+    "Verifier": [
+      "Prior Decisions",
+      "Known Risks",
+      "Retrieved Facts"
+    ],
+    "Synthesizer": [
+      "Relevant Preferences",
+      "Workspace Facts",
+      "Prior Decisions",
+      "Task Continuation State",
+      "Known Risks",
+      "Retrieved Facts"
+    ]
+  },
+  "expected_checks": [
+    "所有子代理的 memory_access_mode 都是 main_agent_packaged_context_only",
+    "角色上下文块不越权",
+    "state_delta 至少包含一批结构化对象提案",
+    "主代理能生成 approved / deferred / rejected 分类",
+    "总上下文预算不超过阶段上限",
+    "fallback_suggestion 能被映射为主代理动作"
+  ]
+}

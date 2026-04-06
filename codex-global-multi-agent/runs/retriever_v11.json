@@ -1,0 +1,100 @@
+{
+  "role": "Retriever",
+  "memory_access_mode": "main_agent_packaged_context_only",
+  "context_snapshot_id": "snapshot-v11-validation",
+  "run_revision": 11,
+  "context_blocks": [
+    "Workspace Facts",
+    "Retrieved Facts"
+  ],
+  "context_token_estimate": 170,
+  "goal": "提取支撑 v1.1 多代理协议闭环的本地证据。",
+  "scope": "仅检索本地协议文件，不访问外网。",
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "summary": "已定位到 schema、memory_write_policy 和 README 中与结构化提案、审批写回、预算熔断直接相关的规则。",
+  "evidence": [
+    {
+      "id": "retriever-e1",
+      "type": "file",
+      "value": "schema v1.1 支持结构化 state_delta 项和 evidence ids。",
+      "ref": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/schemas/subagent_contract.schema.json",
+      "source": "Retriever",
+      "timestamp": "2026-04-05"
+    },
+    {
+      "id": "retriever-e2",
+      "type": "file",
+      "value": "memory_write_policy.md 为 workspace 级写回设置了 evidence_ids 门槛。",
+      "ref": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/policies/memory_write_policy.md",
+      "source": "Retriever",
+      "timestamp": "2026-04-05"
+    },
+    {
+      "id": "retriever-e3",
+      "type": "file",
+      "value": "README.md 定义了 v1.1 预算熔断与唯一入口的验收目标。",
+      "ref": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/README.md",
+      "source": "Retriever",
+      "timestamp": "2026-04-05"
+    }
+  ],
+  "state_delta": {
+    "facts": [
+      {
+        "key": "schema_supports_structured_state_delta",
+        "value": "true",
+        "scope": "workspace",
+        "source": "tool_output",
+        "evidence_ids": [
+          "retriever-e1"
+        ]
+      },
+      {
+        "key": "budget_validation_command",
+        "value": "validate_and_merge.py --max-stage-context-tokens 1200 --max-long-term-tokens 1200",
+        "scope": "task",
+        "source": "tool_output",
+        "evidence_ids": [
+          "retriever-e3"
+        ]
+      }
+    ],
+    "preferences": [],
+    "decisions": [
+      {
+        "topic": "workspace_write_gate",
+        "decision": "Require evidence_ids before approving workspace-level memory writes.",
+        "rationale": "The policy explicitly sets evidence as the gate for long-term workspace memory.",
+        "scope": "workspace",
+        "proposal_type": "append",
+        "source": "tool_output",
+        "evidence_ids": [
+          "retriever-e2"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "Legacy string-only state_delta entries still require manual review before long-term writeback.",
+        "impact": "medium",
+        "likelihood": "medium",
+        "scope": "workspace",
+        "source": "tool_output",
+        "evidence_ids": [
+          "retriever-e1"
+        ]
+      }
+    ]
+  },
+  "risks": [
+    "Retriever does not validate approval semantics by itself; it only gathers evidence."
+  ],
+  "fallback_suggestion": null,
+  "next_steps": [
+    "Pass evidence-backed workspace decisions to Verifier.",
+    "Keep task-only command facts scoped to the current validation run."
+  ],
+  "confidence": 0.86
+}

@@ -1,0 +1,69 @@
+{
+  "role": "Synthesizer",
+  "memory_access_mode": "main_agent_packaged_context_only",
+  "context_snapshot_id": "snapshot-test-5-3",
+  "run_revision": 72,
+  "context_blocks": [
+    "Workspace Facts",
+    "Prior Decisions",
+    "Known Risks"
+  ],
+  "context_token_estimate": 220,
+  "goal": "验证 compression proposal 的 state_delta scope 必须与 target_scope 一致。",
+  "scope": "仅验证压缩提案 schema。",
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "summary": "该样本故意让 compression_manifest.target_scope 为 workspace，但 facts 项写成 task。",
+  "evidence": [
+    {
+      "id": "compression-scope-mismatch-e1",
+      "type": "file",
+      "value": "Compression proposal scope mismatch fixture.",
+      "source": "Synthesizer",
+      "timestamp": "2026-04-06"
+    }
+  ],
+  "state_delta": {
+    "facts": [
+      {
+        "key": "compacted_rule",
+        "value": "[Compressed] Workspace policy summary derived from prior audit records.",
+        "scope": "task",
+        "source": "approved_decision",
+        "evidence_ids": [
+          "compression-scope-mismatch-e1"
+        ]
+      }
+    ],
+    "preferences": [],
+    "decisions": [],
+    "risks": []
+  },
+  "risks": [],
+  "fallback_suggestion": "retry_same_tool",
+  "next_steps": [
+    "Fix scope alignment before approval."
+  ],
+  "confidence": 0.66,
+  "schema_version": "compression_proposal_v1",
+  "proposal_kind": "compression_proposal",
+  "compression_manifest": {
+    "target_workspace_id": "ollamashiyong",
+    "target_scope": "workspace",
+    "rollback_basis": "before_compaction",
+    "source_evidence_hash": "scope-mismatch-hash",
+    "source_memory_ids": [
+      "mem-1",
+      "mem-2"
+    ],
+    "source_identities": [
+      "facts:workspace:workspace_protocol",
+      "decisions:workspace:recall_gate"
+    ],
+    "raw_audit_trail_hashes": [
+      "audit-1",
+      "audit-2"
+    ]
+  }
+}

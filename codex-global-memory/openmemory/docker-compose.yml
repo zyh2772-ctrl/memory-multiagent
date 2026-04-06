@@ -1,0 +1,32 @@
+services:
+  mem0_store:
+    image: qdrant/qdrant:latest
+    container_name: codex-openmemory-qdrant
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  openmemory-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile.openmemory-mcp
+    image: codex-openmemory-mcp:local
+    container_name: codex-openmemory-mcp
+    env_file:
+      - .env
+    environment:
+      - USER
+      - API_KEY
+      - OPENAI_API_KEY
+      - OPENAI_BASE_URL
+    depends_on:
+      - mem0_store
+    ports:
+      - "8765:8765"
+    volumes:
+      - ./data/openmemory.db:/usr/src/openmemory/openmemory.db
+      - ./patches:/patches:ro
+    command: >
+      sh -c "python /patches/patch_openmemory_mem0_dims.py && uvicorn main:app --host 0.0.0.0 --port 8765 --workers 1"
+
+volumes:
+  qdrant_data:

@@ -1,0 +1,67 @@
+{
+  "ok": false,
+  "files_checked": 1,
+  "valid_files": 0,
+  "validation_errors": [
+    "invalid_fact_update_without_evidence.json: state_delta.facts.evidence_ids are required for update/invalidate"
+  ],
+  "file_reports": [
+    {
+      "file": "/Users/zyh/Desktop/ceshi123/ollamashiyong/codex-global-multi-agent/runs/invalid_fact_update_without_evidence.json",
+      "schema_kind": "proposal",
+      "valid": false,
+      "role": "Verifier",
+      "fallback_suggestion": "escalate_to_main_agent",
+      "confidence": 0.41,
+      "errors": [
+        "invalid_fact_update_without_evidence.json: state_delta.facts.evidence_ids are required for update/invalidate"
+      ]
+    }
+  ],
+  "recall_package_reports": [],
+  "role_context_report": {
+    "ok": true,
+    "per_file": []
+  },
+  "snapshot_consistency_report": {
+    "ok": true,
+    "role_payloads": 0,
+    "snapshot_group_count": 0,
+    "per_file": [],
+    "violations": []
+  },
+  "budget_report": {
+    "ok": true,
+    "total_context_tokens": 0.0,
+    "max_stage_context_tokens": 1200.0,
+    "max_long_term_tokens": 1200.0,
+    "violations": [],
+    "per_file": []
+  },
+  "merged_state": {
+    "facts": [],
+    "preferences": [],
+    "decisions": [],
+    "risks": []
+  },
+  "approval_report": {
+    "approved": [],
+    "deferred": [],
+    "rejected": [],
+    "audit_records": [],
+    "ok": true
+  },
+  "fallback_report": {
+    "ok": true,
+    "routes": []
+  },
+  "contract_assertions": {
+    "unique_memory_entry_ok": true,
+    "role_distribution_ok": true,
+    "snapshot_consistency_ok": true,
+    "structured_proposals_ok": false,
+    "approval_writeback_ready": false,
+    "budget_fuse_ok": true,
+    "fallback_routing_ok": true
+  }
+}

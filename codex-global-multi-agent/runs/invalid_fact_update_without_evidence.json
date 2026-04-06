@@ -1,0 +1,49 @@
+{
+  "role": "Verifier",
+  "memory_access_mode": "main_agent_packaged_context_only",
+  "context_snapshot_id": "snapshot-test-5-3",
+  "run_revision": 72,
+  "context_blocks": [
+    "Prior Decisions",
+    "Known Risks",
+    "Retrieved Facts"
+  ],
+  "context_token_estimate": 180,
+  "goal": "验证 update/invalidate 必须带 evidence_ids 的 schema 硬拦截。",
+  "scope": "仅验证 validator 规则，不执行写回。",
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "summary": "该样本故意让 workspace 级 fact update 缺少 evidence_ids。",
+  "evidence": [
+    {
+      "id": "fact-update-missing-evidence",
+      "type": "inference",
+      "value": "This fixture intentionally omits evidence_ids on an update proposal.",
+      "source": "Verifier",
+      "timestamp": "2026-04-06"
+    }
+  ],
+  "state_delta": {
+    "facts": [
+      {
+        "key": "workspace_preference_mode",
+        "value": "strict_v11",
+        "scope": "workspace",
+        "source": "approved_decision",
+        "proposal_type": "update"
+      }
+    ],
+    "preferences": [],
+    "decisions": [],
+    "risks": []
+  },
+  "risks": [
+    "This fixture should be rejected before approval."
+  ],
+  "fallback_suggestion": "escalate_to_main_agent",
+  "next_steps": [
+    "Reject the payload at schema validation time."
+  ],
+  "confidence": 0.41
+}
